@@ -1,8 +1,8 @@
 import React from "react";
 
-const AddProductBtn = () => {
+const AddProductBtn = ({ handleOnClick }) => {
   return (
-    <p><a className="button add-product-button">Add A Product</a></p>
+    <p><a className="button add-product-button" onClick={handleOnClick}>Add A Product</a></p>
   );
 }
 

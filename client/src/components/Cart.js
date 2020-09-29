@@ -5,9 +5,12 @@ const Cart = ({cartItems}) => {
     return item.price * item.quantity + sum
   }, 0);
 
+  
+
   return (
     <div className="cart">
         <h2>Your Cart</h2>
+        
         <table className="cart-items">
           <tr>
             <th>Item</th>
@@ -21,7 +24,6 @@ const Cart = ({cartItems}) => {
               <td>${item.price * item.quantity}</td>
             </tr>
           })}
-
           <tr>
             <td colspan="3" className="total">Total: ${total}</td>
           </tr>
