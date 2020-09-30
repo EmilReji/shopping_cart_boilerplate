@@ -1,6 +1,6 @@
 import React from "react";
 import ProductDetails from "./ProductDetails.js";
-import ProductForm from "./EditProductForm.js";
+import ProductForm from "./ProductForm.js";
 
 class Product extends React.Component {
   state = {
@@ -13,7 +13,7 @@ class Product extends React.Component {
     },
   };
 
-  handleEditToggle = () => {
+  handleToggle = () => {
     this.setState({ showForm: !this.state.showForm });
   };
 
@@ -21,16 +21,16 @@ class Product extends React.Component {
     const name = evt.target.name;
     let value = evt.target.value;
 
-    if (name === 'price') {
-      if (!this.validatePriceKey(value)) {
-        value = value.slice(0, value.length-1);
-      }
-    } else if (name === 'quantity') {
-      const validQuantityKey = this.validateQuantityKey(value);
-      if (!this.validateQuantityKey(value)) {
-        value = value.slice(0, value.length-1);
-      }
-    }
+    // if (name === 'price') {
+    //   if (!this.validatePriceKey(value)) {
+    //     value = value.slice(0, value.length-1);
+    //   }
+    // } else if (name === 'quantity') {
+    //   const validQuantityKey = this.validateQuantityKey(value);
+    //   if (!this.validateQuantityKey(value)) {
+    //     value = value.slice(0, value.length-1);
+    //   }
+    // }
 
     const newFields = Object.assign({}, this.state.fields, { [name]: value });
     this.setState({ fields: newFields });
@@ -44,13 +44,12 @@ class Product extends React.Component {
     return !!val.match(/\d+/);
   }
 
-
   render() {
     return (
       <div className="product">
         <ProductDetails
           data={this.props.data}
-          handleEditToggle={this.handleEditToggle}
+          handleToggle={this.handleToggle}
           hideButtons={this.state.showForm}
           handleDeleteProduct={this.props.handleDeleteProduct}
           handleAddToCart={this.props.handleAddToCart}
@@ -58,9 +57,10 @@ class Product extends React.Component {
         {this.state.showForm && (
           <ProductForm
             handleInputChange={this.handleInputChange}
-            handleUpdateProduct={this.props.handleUpdateProduct}
-            handleEditToggle={this.handleEditToggle}
+            handleSubmitForm={this.props.handleUpdateProduct}
+            handleToggle={this.handleToggle}
             fields={this.state.fields}
+            type='edit'
           />
         )}
       </div>

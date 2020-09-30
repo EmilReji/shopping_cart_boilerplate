@@ -1,6 +1,5 @@
 import React from "react";
-import AddProductBtn from "./AddProductBtn.js";
-import AddProductForm from "./AddProductForm.js";
+import ProductForm from "./ProductForm.js";
 
 class AddProduct extends React.Component {
   state = {
@@ -36,9 +35,15 @@ class AddProduct extends React.Component {
 
     return (
       <div className={`add-form ${visible}`}>
-          <h3>Add Product</h3>
-          <AddProductForm handleToggleForm={this.handleShowForm} resetFields={this.resetFields} fields={this.state.fields} handleInputChange={this.handleInputChange} handleNewProduct={this.props.handleNewProduct} />
-          <AddProductBtn handleOnClick={this.handleShowForm} />
+          <ProductForm 
+            type='add'
+            handleToggle={this.handleShowForm}
+            resetFields={this.resetFields}
+            fields={this.state.fields}
+            handleInputChange={this.handleInputChange}
+            handleSubmitForm={this.props.handleNewProduct} 
+          />
+          <a className="button add-product-button" onClick={this.handleShowForm}>Add A Product</a>
       </div>
     );
   }

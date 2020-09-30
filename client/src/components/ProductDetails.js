@@ -1,6 +1,6 @@
 import React from "react";
 
-const ProductDetails = ({data, handleAddToCart, handleEditToggle, hideButtons, handleDeleteProduct}) => {
+const ProductDetails = ({data, handleAddToCart, handleToggle, hideButtons, handleDeleteProduct}) => {
   const buttonDisabled = data.quantity === 0 ? 'disabled' : '';
 
   const handleCartClick = (evt) => {
@@ -10,7 +10,7 @@ const ProductDetails = ({data, handleAddToCart, handleEditToggle, hideButtons, h
 
   const handleToggleForm = (evt) => {
     evt.preventDefault();
-    handleEditToggle();
+    handleToggle();
   };
 
   const handleDeleteClick = (evt) => {
