@@ -1,34 +1,46 @@
 import React from "react";
 
-const Cart = ({cartItems}) => {
-  const total = cartItems.reduce((sum, item) => {
-    return item.price * item.quantity + sum
+const Cart = ({cartItems, handleCheckoutCart}) => {
+  const total = Object.keys(cartItems).reduce((sum, id) => {
+    return (cartItems[id].product.price * cartItems[id].quantity) + sum
   }, 0);
 
-  
+  const items = Object.keys(cartItems).map((id) => {
+            return <tr key={id}>
+              <td>{cartItems[id].product.title}</td>
+              <td>{cartItems[id].quantity}</td>
+              <td>${cartItems[id].product.price}</td>
+            </tr>
+          })
+  const formattedTotal = total.toFixed(2);
+
+  const cartEmpty = Object.keys(cartItems).length === 0 ? 'disabled' : '';
 
   return (
     <div className="cart">
         <h2>Your Cart</h2>
         
-        <table className="cart-items">
-          <tr>
-            <th>Item</th>
-            <th>Quantity</th>
-            <th>Price</th>
-          </tr>
-          {cartItems.map((item) => {
-            return <tr>
-              <td>{item.title}</td>
-              <td>{item.quantity}</td>
-              <td>${item.price * item.quantity}</td>
+          {cartEmpty ? (
+            <>
+              <p>Your cart is empty</p>
+              <p>Total: $0.00</p>
+            </>
+          ): (
+          <table className="cart-items">
+           <tbody>
+              <tr>
+                <th>Item</th>
+                <th>Quantity</th>
+                <th>Price</th>
+              </tr>
+              {items}
+            <tr>
+              <td colSpan="3" className="total">Total: ${formattedTotal}</td>
             </tr>
-          })}
-          <tr>
-            <td colspan="3" className="total">Total: ${total}</td>
-          </tr>
+          </tbody>
         </table>
-        <a className="button checkout">Checkout</a>
+        )}
+        <a className={`button checkout ${cartEmpty}`} onClick={handleCheckoutCart}>Checkout</a>
       </div>
   );
 }

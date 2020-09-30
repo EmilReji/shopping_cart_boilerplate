@@ -1,9 +1,11 @@
 import React from "react";
 
 const ProductDetails = ({data, handleAddToCart, handleEditToggle, hideButtons, handleDeleteProduct}) => {
+  const buttonDisabled = data.quantity === 0 ? 'disabled' : '';
+
   const handleCartClick = (evt) => {
     evt.preventDefault();
-    handleAddToCart(data.id);
+    if (!buttonDisabled) handleAddToCart(data._id);
   };
 
   const handleToggleForm = (evt) => {
@@ -13,7 +15,7 @@ const ProductDetails = ({data, handleAddToCart, handleEditToggle, hideButtons, h
 
   const handleDeleteClick = (evt) => {
     evt.preventDefault();
-    handleDeleteProduct(data.id);
+    handleDeleteProduct(data._id);
   };
 
   return (
@@ -23,7 +25,7 @@ const ProductDetails = ({data, handleAddToCart, handleEditToggle, hideButtons, h
       <p className="quantity">{data.quantity} left in stock</p>
       { !hideButtons && 
       <div className="actions product-actions">
-        <a className={`button add-to-cart ${data.quantity === 0 ? 'disabled' : ''}`} onClick={handleCartClick}>Add to Cart</a>
+        <a className={`button add-to-cart ${buttonDisabled}`} onClick={handleCartClick}>Add to Cart</a>
         <a className="button edit" onClick={handleToggleForm}>Edit</a>
       </div>
       }

@@ -6,7 +6,7 @@ class Product extends React.Component {
   state = {
     showForm: false,
     fields: {
-      id: this.props.data.id,
+      _id: this.props.data._id,
       title: this.props.data.title,
       price: this.props.data.price,
       quantity: this.props.data.quantity,
@@ -19,10 +19,31 @@ class Product extends React.Component {
 
   handleInputChange = (evt) => {
     const name = evt.target.name;
-    const value = evt.target.value;
+    let value = evt.target.value;
+
+    if (name === 'price') {
+      if (!this.validatePriceKey(value)) {
+        value = value.slice(0, value.length-1);
+      }
+    } else if (name === 'quantity') {
+      const validQuantityKey = this.validateQuantityKey(value);
+      if (!this.validateQuantityKey(value)) {
+        value = value.slice(0, value.length-1);
+      }
+    }
+
     const newFields = Object.assign({}, this.state.fields, { [name]: value });
     this.setState({ fields: newFields });
   };
+
+  validatePriceKey = (val) => {
+    return !!val.match(/\d+\.?\d+/);
+  }
+
+  validateQuantityKey = (val) => {
+    return !!val.match(/\d+/);
+  }
+
 
   render() {
     return (
@@ -32,6 +53,7 @@ class Product extends React.Component {
           handleEditToggle={this.handleEditToggle}
           hideButtons={this.state.showForm}
           handleDeleteProduct={this.props.handleDeleteProduct}
+          handleAddToCart={this.props.handleAddToCart}
         />
         {this.state.showForm && (
           <ProductForm

@@ -4,68 +4,126 @@ import ProductList from "./ProductList.js";
 import AddProduct from "./AddProduct.js";
 import data from "../lib/data.js"
 
-// const App = () => {
-//   return (
-//     <div id="app">
-//       <Header />
-//       <ProductList products={data} />
-//       <AddProduct />
-//     </div>
-//   );
-// };
-
 class App extends React.Component {
   state = {
     products: [],
-    cartItems: [],
+    cartItems: {},
   }
 
   componentDidMount() {
-    console.log(this.state.products);
-    this.setState({
-      products: data,
-      cartItems: data.slice(0, 2),
-    });
+    fetch('/api/products')
+      .then(res => res.json())
+      .then(products => {
+        this.setState({
+          products: products,
+        });
+      });
   }
 
-  handleAddToCart = () => {
+  handleAddToCart = (productId) => {
+    const product = this.state.products.find(product => {
+      return product._id === productId;
+    });
 
+    if (this.state.cartItems[productId]) {
+      this.setState((prevState) => {
+        return {
+          cartItems: Object.assign(
+              {},
+              prevState.cartItems,
+              {[productId]: { product, quantity: +prevState.cartItems[productId].quantity + 1 }}
+            )
+        };
+      });
+    } else {
+      this.setState((prevState) => {
+          return {
+            cartItems: Object.assign(
+              {},
+              prevState.cartItems,
+              { [productId]: { product, quantity: 1 }}
+            )
+          };
+      });
+    }
+
+
+    this.setState((prevState) => {
+      return {
+        products: prevState.products.map(product => {
+          if (product._id === productId) {
+            return Object.assign({}, product, { quantity: +product.quantity - 1 });
+          } else {
+            return product;
+          }
+        }),
+      }
+    });
   }
 
   handleUpdateProduct = (fields) => {
-    const products = this.state.products.map(prod => {
-      if (prod.id === fields.id) {
-        return {...fields};
-      } else {
-        return prod;
-      }
-    });
+    console.log(fields);
+    fetch(`/api/products/${fields._id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(fields)
+    }).then(res => res.json())
+      .then(product => {
+        const updatedProducts = this.state.products.map(prod => {
+          if (prod._id === fields._id) {
+            return {...fields};
+          } else {
+            return prod;
+          }
+        });
 
-    this.setState({ products: products });
+        this.setState({ products: updatedProducts })
+    });
   }
 
   handleDeleteProduct = (id) => {
-    const products = this.state.products.filter(prod => {
-      return prod.id !== id;
-    });
+    fetch(`/api/products/${id}`, {
+      method: 'DELETE',
+    }).then((res) => {
+        const products = this.state.products.filter(prod => {
+          return prod._id !== id;
+        });
 
-    this.setState({ products: products });
+        this.setState({ products });
+    });
   }
 
   handleNewProduct = (fields) => {
-    const nextId = this.state.products.length + 1; // change when linking to server
-    this.setState({ products: this.state.products.concat({
-      id: nextId,
+    const newProduct =  {
       title: fields.title,
       price: Number(fields.price),
       quantity: Number(fields.quantity),
-    })});
+    };
+
+    fetch('/api/products', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(newProduct)
+    }).then(res => res.json())
+      .then(product => {
+         this.setState({ products: this.state.products.concat(product)
+      })
+    });
+  }
+
+  handleCheckoutCart = () => {
+    this.setState({ cartItems: {} });
+    console.log(this.state);
   }
 
   render () {
     return (
       <div id="app">
-        <Header cartItems={this.state.cartItems} />
+        <Header cartItems={this.state.cartItems} handleCheckoutCart={this.handleCheckoutCart} />
         <ProductList products={this.state.products} handleAddToCart={this.handleAddToCart} handleUpdateProduct={this.handleUpdateProduct} handleDeleteProduct={this.handleDeleteProduct}/>
         <AddProduct handleNewProduct={this.handleNewProduct} />
       </div>

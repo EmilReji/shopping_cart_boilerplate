@@ -1,33 +1,4 @@
-import React from "react";
-
-// const EditProductForm = ({ handleEditToggle, data }) => {
-//   return (
-//     <div className="edit-form">
-//         <h3>Edit Product</h3>
-//         <form>
-//             <div className="input-group">
-//                 <label htmlFor="product-name">Product Name</label>
-//                 <input type="text" id="product-name" value={data.title} />
-//             </div>
-
-//             <div className="input-group">
-//                 <label htmlFor="product-price">Price</label>
-//                 <input type="text" id="product-price" value={data.price} />
-//             </div>
-
-//             <div className="input-group">
-//                 <label htmlFor="product-quantity">Quantity</label>
-//                 <input type="text" id="product-quantity" value={data.quantity} />
-//             </div>
-
-//             <div className="actions form-actions">
-//                 <a className="button">Update</a>
-//                 <a className="button" onClick={handleEditToggle}>Cancel</a>
-//             </div>
-//         </form>
-//     </div>
-//   );
-// }
+import React from 'react';
 
 const EditProductForm = ({
   handleEditToggle,
