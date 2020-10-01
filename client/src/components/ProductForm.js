@@ -6,7 +6,18 @@ const ProductForm = ({
   handleInputChange,
   handleSubmitForm,
   type
+  // data
 }) => {
+
+  // state = {
+  //   showForm: false,
+  //   fields: {
+  //     _id: this.props.data._id || null,
+  //     title: this.props.data.title || '',
+  //     price: this.props.data.price || '',
+  //     quantity: this.props.data.quantity || '',
+  //   },
+  // };
 
   // const invalidFields = () => {
   //   console.log(fields);

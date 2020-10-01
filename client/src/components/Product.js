@@ -61,6 +61,7 @@ class Product extends React.Component {
             handleToggle={this.handleToggle}
             fields={this.state.fields}
             type='edit'
+            // data={this.props.data}
           />
         )}
       </div>

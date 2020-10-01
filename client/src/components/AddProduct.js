@@ -1,4 +1,5 @@
 import React from "react";
+import store from "../lib/store.js";
 import ProductForm from "./ProductForm.js";
 
 class AddProduct extends React.Component {
@@ -30,6 +31,30 @@ class AddProduct extends React.Component {
     }});
   }
 
+  handleNewProduct = (fields) => {
+    const newProduct =  {
+      title: fields.title,
+      price: Number(fields.price),
+      quantity: Number(fields.quantity),
+    };
+
+    fetch('/api/products', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(newProduct)
+    }).then(res => res.json())
+      .then(product => {
+         store.dispatch({
+           type: "ADD_PRODUCT",
+           payload: {
+             product: product
+           }
+         });
+    });
+  }
+
   render() {
     const visible = this.state.showForm ? 'visible' : '';
 
@@ -41,7 +66,7 @@ class AddProduct extends React.Component {
             resetFields={this.resetFields}
             fields={this.state.fields}
             handleInputChange={this.handleInputChange}
-            handleSubmitForm={this.props.handleNewProduct} 
+            handleSubmitForm={this.handleNewProduct} 
           />
           <a className="button add-product-button" onClick={this.handleShowForm}>Add A Product</a>
       </div>
