@@ -20,6 +20,8 @@ const cartItems =  (state = {}, action) => {
 
       case "CHECKOUT_CART":
         return action.payload.cart;
+      //case "UPDATE_PRODUCT":
+          
       default:
           return state;
     }

@@ -35,12 +35,12 @@ class ProductList extends React.Component {
       }
     });
 
-    store.dispatch({
-      type: "DECREMENT_QUANTITY",
-      payload: {
-        product: product
-      }
-    });
+    // store.dispatch({
+    //   type: "DECREMENT_QUANTITY",
+    //   payload: {
+    //     product: product
+    //   }
+    // });
 
 
     // this.setState((prevState) => {

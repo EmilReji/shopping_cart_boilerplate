@@ -18,7 +18,7 @@ const products = (state = [], action) => {
           }); 
       case "ADD_PRODUCT":
           return state.concat(action.payload.product);
-      case "DECREMENT_QUANTITY":
+      case "ADD_TO_CART":
             const productId = action.payload.product._id;
             return state.map(product => {
                         if (product._id === productId) {
