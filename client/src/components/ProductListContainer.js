@@ -55,14 +55,15 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-const mergeProductListProps = (stateProps, dispatchProps) => {
+const mergeProductListProps = (stateProps, dispatchProps, ownProps) => {
   return {
     ...stateProps,
     ...dispatchProps,
+    ...ownProps,
     onAddToCart: (productId) => {
       const product = stateProps.products.find((product) => {
         return product._id === productId;
-      }); // reducer
+      });
       dispatchProps.dispatch({
         type: "ADD_TO_CART",
         payload: {

@@ -7,6 +7,7 @@ class ProductList extends React.Component {
   }
 
   render(){
+      console.log(this.props.dummy);
       return (
       <main>
         <div className="product-listing"> 

@@ -7,7 +7,7 @@ const App = () => {
   return (
     <div id="app">
       <Header />
-      <ProductListContainer />
+      <ProductListContainer dummy={1}/>
       <AddProductContainer />
     </div>
   );
