@@ -1,14 +1,14 @@
 import React from "react";
 import Header from "./Header.js";
-import ProductList from "./ProductList.js";
-import AddProduct from "./AddProduct.js";
+import ProductListContainer from "./ProductListContainer.js";
+import AddProductContainer from "./AddProductContainer.js";
 
 const App = () => {
   return (
     <div id="app">
       <Header />
-      <ProductList />
-      <AddProduct />
+      <ProductListContainer />
+      <AddProductContainer />
     </div>
   );
 }

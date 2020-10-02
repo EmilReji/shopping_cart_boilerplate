@@ -1,11 +1,11 @@
 import React from "react";
-import Cart from "./Cart.js";
+import CartContainer from "./CartContainer.js";
 
 const Header = ({cartItems, handleCheckoutCart}) => {
   return (
     <header>
       <h1>The Shop!</h1>
-      <Cart cartItems={cartItems} handleCheckoutCart={handleCheckoutCart} />
+      <CartContainer />
     </header>   
   );
 }

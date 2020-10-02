@@ -1,8 +1,10 @@
 const cartItems =  (state = {}, action) => {
+    let productId;
+    
     switch(action.type) {
       case "ADD_TO_CART":
         const product = action.payload.product;
-        const productId = action.payload.product._id;
+        productId = action.payload.product._id;
         if (state[productId]) {
             return Object.assign(
                 {},
@@ -20,8 +22,15 @@ const cartItems =  (state = {}, action) => {
 
       case "CHECKOUT_CART":
         return action.payload.cart;
-      //case "UPDATE_PRODUCT":
-          
+      case "UPDATE_PRODUCT":
+        productId = action.payload.product._id;
+        if (state[productId]) {
+          return Object.assign({}, state, {
+            [productId]: { product: action.payload.product, quantity: +state[productId].quantity }
+          });
+        } else {
+          return state;
+        }
       default:
           return state;
     }

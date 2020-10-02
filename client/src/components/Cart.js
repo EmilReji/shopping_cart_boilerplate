@@ -2,29 +2,9 @@ import React from "react";
 import store from "../lib/store.js"
 
 class Cart extends React.Component {
-  componentDidMount() {
-    this.unsubscribe = store.subscribe(() => {
-      this.forceUpdate();
-    });
-  }
-
-  componentWillUnmount(){
-    this.unsubscribe();
-  }
-
-  handleCheckoutCart = (evt) => {
-    evt.preventDefault();
-    store.dispatch({
-      type: "CHECKOUT_CART",
-      payload: {
-        cart: {}
-      }
-    });
-  }
-
 
   render(){
-    const cartItems = store.getState().cartItems;
+    const cartItems = this.props.cartItems;
     const total = Object.keys(cartItems).reduce((sum, id) => {
       return (cartItems[id].product.price * cartItems[id].quantity) + sum
     }, 0);
@@ -64,7 +44,7 @@ class Cart extends React.Component {
             </tbody>
           </table>
           )}
-          <a className={`button checkout ${cartEmpty}`} onClick={this.handleCheckoutCart}>Checkout</a>
+          <a className={`button checkout ${cartEmpty}`} onClick={this.props.onCheckoutCart}>Checkout</a>
         </div>
     );
   }
